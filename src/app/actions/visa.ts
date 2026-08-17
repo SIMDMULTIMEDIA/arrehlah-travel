@@ -1,7 +1,13 @@
 "use server";
 
-import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { createClient } from "@supabase/supabase-js";
+
+// Initialize Supabase admin client to bypass RLS for inserting from the server action
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export async function submitVisaApplication(formData: FormData) {
   try {
@@ -19,38 +25,56 @@ export async function submitVisaApplication(formData: FormData) {
       return { success: false, error: "Missing required fields" };
     }
 
-    // In a real app with auth, you'd get the userId from the session.
-    // Since auth might not be fully hooked up, we'll try to find a user by email,
-    // or create a dummy user to attach this application to if no user is found.
-    let user = await prisma.user.findUnique({
-      where: { email },
-    });
+    // 1. Find or create user
+    let { data: users, error: userError } = await supabase
+      .from("User")
+      .select("id")
+      .eq("email", email);
 
-    if (!user) {
-      user = await prisma.user.create({
-        data: {
+    if (userError) throw userError;
+
+    let userId = users && users.length > 0 ? users[0].id : null;
+
+    if (!userId) {
+      const { data: newUser, error: createError } = await supabase
+        .from("User")
+        .insert({
+          id: crypto.randomUUID(), // Ensure an ID is set matching Prisma UUID default
           email,
           firstName,
           lastName,
           phone,
           role: "CUSTOMER",
-        },
-      });
+          updatedAt: new Date().toISOString()
+        })
+        .select()
+        .single();
+
+      if (createError) throw createError;
+      userId = newUser.id;
     }
 
-    // Generate a reference number
+    // 2. Generate a reference number
     const reference = `VISA-${Date.now().toString().slice(-6)}`;
 
-    const application = await prisma.visaApplication.create({
-      data: {
+    // 3. Create Visa Application
+    const { data: application, error: appError } = await supabase
+      .from("VisaApplication")
+      .insert({
+        id: crypto.randomUUID(),
         reference,
-        userId: user.id,
+        userId: userId,
         destination,
         visaType,
-        serviceFee: 50000, // Placeholder fee
+        status: "DRAFT", // Or SUBMITTED based on your enum
+        serviceFee: 50000.00,
         notes: `Expected Travel: ${travelDate}\nPassport: ${passportNumber}\nAdditional Notes: ${notes}`,
-      },
-    });
+        updatedAt: new Date().toISOString()
+      })
+      .select()
+      .single();
+
+    if (appError) throw appError;
 
     revalidatePath("/visa");
     return { success: true, applicationReference: application.reference };
