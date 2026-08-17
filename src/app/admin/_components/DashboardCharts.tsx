@@ -50,7 +50,7 @@ export default function DashboardCharts({ data }: { data: ChartData[] }) {
             border: 'none', 
             boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)'
           }}
-          formatter={(value: number) => [`₦${value.toLocaleString()}`, 'Revenue']}
+          formatter={(value: any) => [`₦${Number(value).toLocaleString()}`, 'Revenue']}
         />
         <Bar 
           dataKey="revenue" 

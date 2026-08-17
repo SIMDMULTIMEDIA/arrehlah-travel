@@ -30,11 +30,6 @@ export default async function UsersPage({
     const [fetched, count] = await Promise.all([
       prisma.user.findMany({
         where: searchFilter,
-        include: {
-          roles: {
-            include: { role: true }
-          }
-        },
         orderBy: { createdAt: "desc" },
         skip,
         take: limit,
@@ -109,15 +104,9 @@ export default async function UsersPage({
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-1">
-                        {user.roles.length === 0 ? (
-                          <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-xs font-medium">CUSTOMER</span>
-                        ) : (
-                          user.roles.map((r: any) => (
-                            <span key={r.role.id} className="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-xs font-bold uppercase">
-                              {r.role.name}
-                            </span>
-                          ))
-                        )}
+                        <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-xs font-bold uppercase">
+                          {user.role}
+                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center text-slate-500 text-xs">

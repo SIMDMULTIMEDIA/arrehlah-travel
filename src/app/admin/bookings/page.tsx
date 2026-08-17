@@ -15,7 +15,7 @@ export default async function BookingsPage({
   const limit = 20;
   const skip = (page - 1) * limit;
 
-  const statusFilter = searchParams.status ? { status: searchParams.status } : {};
+  const statusFilter = searchParams.status ? { status: searchParams.status as any } : {};
   const searchFilter = searchParams.q ? {
     OR: [
       { reference: { contains: searchParams.q, mode: "insensitive" as const } },
