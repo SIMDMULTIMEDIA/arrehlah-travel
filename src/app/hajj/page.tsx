@@ -8,7 +8,9 @@ export default function HajjPage() {
       <div className="bg-[var(--color-brand-navy)] py-20 text-center px-4">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Hajj Services</h1>
         <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-8">Begin your journey of a lifetime with Arrehlah Travel. Pre-register for the upcoming Hajj season.</p>
-        <Button size="lg" className="px-8 bg-[var(--color-brand-gold)] text-[var(--color-brand-navy)] hover:bg-[var(--color-brand-gold-light)]">Pre-Register Now</Button>
+        <Button size="lg" className="px-8 bg-[var(--color-brand-gold)] text-[var(--color-brand-navy)] hover:bg-[var(--color-brand-gold-light)]" asChild>
+          <Link href="/hajj/pre-register">Pre-Register Now</Link>
+        </Button>
       </div>
 
       <div className="container mx-auto px-4 mt-16 max-w-4xl">
