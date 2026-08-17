@@ -49,7 +49,9 @@ export function Navbar() {
                 Sign In
               </Button>
             </Link>
-            <Button>Book Now</Button>
+            <Link href="/tours">
+              <Button>Book Now</Button>
+            </Link>
           </div>
 
           <div className="md:hidden flex items-center">
@@ -79,6 +81,11 @@ export function Navbar() {
                 <Button variant="outline" className="w-full justify-start gap-2">
                   <User className="h-4 w-4" />
                   Sign In
+                </Button>
+              </Link>
+              <Link href="/tours" onClick={() => setIsOpen(false)}>
+                <Button className="w-full justify-start gap-2">
+                  Book Now
                 </Button>
               </Link>
             </div>
