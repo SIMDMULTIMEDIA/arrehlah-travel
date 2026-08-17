@@ -23,10 +23,7 @@ export function Navbar() {
         <div className="flex h-20 items-center justify-between">
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2">
-              <Plane className="h-8 w-8 text-[var(--color-brand-green)]" />
-              <span className="text-xl font-bold tracking-tight text-[var(--color-brand-navy)]">
-                Arrehlah Travel
-              </span>
+              <img src="/logo.png" alt="Arrehlah Travel Logo" className="h-12 w-auto" />
             </Link>
           </div>
           

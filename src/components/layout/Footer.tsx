@@ -9,10 +9,7 @@ export function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-6">
-              <Plane className="h-8 w-8 text-[var(--color-brand-green)]" />
-              <span className="text-xl font-bold tracking-tight text-white">
-                Arrehlah Travel
-              </span>
+              <img src="/logo.png" alt="Arrehlah Travel Logo" className="h-16 w-auto bg-white p-2 rounded" />
             </Link>
             <p className="text-slate-300 mb-6 text-sm leading-relaxed">
               Premium travel services from Kano to the world. Flights, hotels, tours, Umrah, Hajj, and visas with complete peace of mind.
