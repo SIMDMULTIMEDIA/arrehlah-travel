@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { AlertCircle, CheckCircle, XCircle } from "lucide-react";
 import { RoleName } from "@prisma/client";
-import PaymentApprovalForm from "./_components/PaymentApprovalForm";
+import PaymentApprovalForm from "../_components/PaymentApprovalForm";
 
 export default async function PendingPaymentsPage() {
   const user = await requireRole([

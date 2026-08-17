@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, User, CreditCard, Clock, FileText, CheckCircle, XCircle } from "lucide-react";
-import BookingStatusForm from "./_components/BookingStatusForm";
+import BookingStatusForm from "../_components/BookingStatusForm";
 
 export default async function BookingDetailsPage({
   params,
