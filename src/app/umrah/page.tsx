@@ -6,7 +6,7 @@ export default function UmrahPage() {
   const packages = [
     { name: 'Economy Package', nights: 14, price: '₦1,800,000', makkah: "3 Star Hotel (1000m)", madinah: "3 Star Hotel (500m)" },
     { name: 'Standard Package', nights: 14, price: '₦2,500,000', popular: true, makkah: "4 Star Hotel (500m)", madinah: "4 Star Hotel (250m)" },
-    { name: 'VIP Package', nights: 10, price: '₦4,200,000', makkah: "5 Star Hotel (Haram View)", madinah: "5 Star Hotel (Haram View)" },
+    { name: 'Premium Package', nights: 10, price: '₦4,200,000', makkah: "5 Star Hotel (Haram View)", madinah: "5 Star Hotel (Haram View)" },
   ];
 
   return (
@@ -76,7 +76,7 @@ export default function UmrahPage() {
                 </ul>
               </div>
 
-              <Link href="/umrah/book">
+              <Link href={`/umrah/register?package=${encodeURIComponent(pkg.name)}`}>
                 <Button className="w-full h-12" variant={pkg.popular ? 'default' : 'outline'}>
                   Book This Package
                 </Button>
