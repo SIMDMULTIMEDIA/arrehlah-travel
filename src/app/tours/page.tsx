@@ -5,9 +5,9 @@ import Link from "next/link";
 
 export default function ToursPage() {
   const tours = [
-    { id: 1, title: "Discover Dubai - 5 Days", dest: "Dubai, UAE", days: 5, price: "₦650,000", image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop" },
-    { id: 2, title: "Best of London", dest: "London, UK", days: 7, price: "₦1,200,000", image: "https://images.unsplash.com/photo-1513635269975-59693e0cd156?q=80&w=800&auto=format&fit=crop" },
-    { id: 3, title: "Egyptian Wonders", dest: "Cairo, Egypt", days: 6, price: "₦750,000", image: "https://images.unsplash.com/photo-1539667468225-eebb663053e6?q=80&w=800&auto=format&fit=crop" },
+    { id: 1, title: "Discover Dubai - 5 Days", slug: "discover-dubai-5-days", dest: "Dubai, UAE", days: 5, price: "₦650,000", image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop" },
+    { id: 2, title: "Best of London", slug: "best-of-london", dest: "London, UK", days: 7, price: "₦1,200,000", image: "https://images.unsplash.com/photo-1513635269975-59693e0cd156?q=80&w=800&auto=format&fit=crop" },
+    { id: 3, title: "Egyptian Wonders", slug: "egyptian-wonders", dest: "Cairo, Egypt", days: 6, price: "₦750,000", image: "https://images.unsplash.com/photo-1539667468225-eebb663053e6?q=80&w=800&auto=format&fit=crop" },
   ];
 
   return (
@@ -46,8 +46,8 @@ export default function ToursPage() {
                 <p className="text-slate-600 text-sm mb-6 line-clamp-2">
                   Experience the best of {tour.dest} with our carefully curated itinerary including accommodation, transfers, and guided tours.
                 </p>
-                <Link href={`/tours/${tour.id}`}>
-                  <Button className="w-full" variant="outline">View Details</Button>
+                <Link href={`/tours/register?tour=${tour.slug}`}>
+                  <Button className="w-full" variant="outline">Book Tour</Button>
                 </Link>
               </div>
             </div>
