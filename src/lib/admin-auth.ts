@@ -1,0 +1,175 @@
+import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import { RoleName } from "@prisma/client";
+
+/**
+ * Creates a server-side Supabase client using cookies.
+ */
+function createClient() {
+  const cookieStore = cookies();
+  
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        async getAll() {
+          const resolvedCookies = await cookieStore;
+          return resolvedCookies.getAll().map((cookie) => ({
+            name: cookie.name,
+            value: cookie.value,
+          }));
+        },
+        async setAll(cookiesToSet) {
+          try {
+            const resolvedCookies = await cookieStore;
+            cookiesToSet.forEach(({ name, value, options }) =>
+              resolvedCookies.set(name, value, options)
+            );
+          } catch (error) {
+            // The `setAll` method was called from a Server Component.
+            // This can be ignored if you have middleware refreshing
+            // user sessions.
+          }
+        },
+      },
+    }
+  );
+}
+
+/**
+ * Development authentication bypass.
+ * Strictly checks for NODE_ENV and explicit environment variable.
+ */
+async function getDevBypassUser() {
+  if (
+    process.env.NODE_ENV === "development" &&
+    process.env.ADMIN_DEV_BYPASS === "true"
+  ) {
+    try {
+      // Attempt to find a SUPER_ADMIN in the database
+      let admin = await prisma.user.findFirst({
+        where: { role: RoleName.SUPER_ADMIN },
+      });
+
+      if (!admin) {
+        // If no admin exists, create a dummy one for dev purposes
+        admin = await prisma.user.create({
+          data: {
+            email: "devadmin@arrehlah.com",
+            firstName: "Dev",
+            lastName: "Admin",
+            role: RoleName.SUPER_ADMIN,
+          },
+        });
+      }
+      return admin;
+    } catch (error) {
+      console.error("Database connection failed in DEV bypass, using mock user.");
+      // Return a complete mock user so UI can still render
+      return {
+        id: "mock-dev-id",
+        email: "devadmin@arrehlah.com",
+        firstName: "Dev",
+        lastName: "Admin",
+        phone: "123456789",
+        role: RoleName.SUPER_ADMIN,
+        isActive: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+    }
+  }
+  return null;
+}
+
+/**
+ * Gets the currently authenticated user from the database.
+ */
+export async function getAuthenticatedUser() {
+  // 1. Check Dev Bypass First (Only in Dev)
+  const devUser = await getDevBypassUser();
+  if (devUser) {
+    return devUser;
+  }
+
+  // 2. Real Authentication Flow
+  const supabase = createClient();
+  const { data: { user: supabaseUser }, error } = await supabase.auth.getUser();
+
+  if (error || !supabaseUser) {
+    return null;
+  }
+
+  // 3. Match Supabase user to Prisma user
+  const dbUser = await prisma.user.findUnique({
+    where: { id: supabaseUser.id },
+  });
+
+  if (!dbUser && supabaseUser.email) {
+      // Fallback to email lookup if ID doesn't match (e.g. legacy migrations)
+      return await prisma.user.findUnique({
+          where: { email: supabaseUser.email }
+      });
+  }
+
+  return dbUser;
+}
+
+/**
+ * Requires an authenticated user. Redirects to login if not authenticated.
+ */
+export async function requireAuthenticatedUser() {
+  const user = await getAuthenticatedUser();
+  if (!user) {
+    redirect("/auth/login");
+  }
+  return user;
+}
+
+/**
+ * Requires the user to have any role OTHER than CUSTOMER.
+ * Used to protect the /admin base routes.
+ */
+export async function requireAdmin() {
+  const user = await requireAuthenticatedUser();
+  
+  if (user.role === RoleName.CUSTOMER) {
+    // Record unauthorized attempt (fire and forget)
+    try {
+        await prisma.auditLog.create({
+            data: {
+                userId: user.id,
+                action: "UNAUTHORIZED_ADMIN_ACCESS",
+                resource: "AdminPanel",
+                metadata: { path: "/admin" }
+            }
+        });
+    } catch (e) {
+        // Ignore audit log failure during unauthorized access
+    }
+    redirect("/"); // Or to a specific "Unauthorized" page
+  }
+  
+  return user;
+}
+
+/**
+ * Requires the user to have one of the specifically allowed roles.
+ */
+export async function requireRole(allowedRoles: RoleName[]) {
+  const user = await requireAdmin();
+  
+  // SUPER_ADMIN has access to everything
+  if (user.role === RoleName.SUPER_ADMIN) {
+    return user;
+  }
+
+  if (!allowedRoles.includes(user.role)) {
+    redirect("/admin"); // Redirect back to admin dashboard if they lack specific role
+  }
+
+  return user;
+}

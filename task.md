@@ -1,0 +1,8 @@
+- [x] Create FlightProvider abstraction in `src/lib/flights/provider.ts`
+- [x] Update `src/app/flights/page.tsx` to use the provider and pass `offerId`
+- [x] Create `src/components/flights/FlightBookingForm.tsx` with all traveler fields
+- [x] Create `src/app/flights/book/page.tsx` to handle the offer retrieval
+- [x] Create `src/app/actions/flights.ts` for safe booking processing (with saga pattern rollback)
+- [x] Create `src/app/flights/confirmation/[bookingReference]/page.tsx`
+- [x] Test the full flight flow locally
+- [x] Commit and deploy to Netlify
