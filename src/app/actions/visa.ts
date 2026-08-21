@@ -83,3 +83,4 @@ export async function submitVisaApplication(formData: FormData) {
     return { success: false, error: error.message || "Failed to submit application" };
   }
 }
+

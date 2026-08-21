@@ -147,3 +147,4 @@ export async function submitHotelBooking(formData: FormData) {
     return { success: false, error: error.message || "Failed to submit booking" };
   }
 }
+

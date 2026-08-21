@@ -112,3 +112,4 @@ export async function submitUmrahRegistration(formData: FormData) {
     return { success: false, error: error.message || "Failed to submit registration" };
   }
 }
+

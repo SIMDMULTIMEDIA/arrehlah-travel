@@ -129,3 +129,4 @@ export async function submitTourRegistration(formData: FormData) {
     return { success: false, error: error.message || "Failed to submit registration" };
   }
 }
+
