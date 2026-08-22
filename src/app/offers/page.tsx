@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Tag, PlaneTakeoff, Hotel } from "lucide-react";
 
-export const metadata = {
-  title: "Special Offers | Arrehlah Travel"
+export const metadata: Metadata = {
+  title: "Travel Offers & Deals",
+  description: "Discover special travel offers, discounted flights, and exclusive holiday packages from Kano, Nigeria with Arrehlah Travel & Tours.",
+  alternates: { canonical: "/offers" }
 };
 
 export default function OffersPage() {
@@ -70,3 +73,6 @@ export default function OffersPage() {
     </div>
   );
 }
+
+
+

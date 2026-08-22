@@ -1,8 +1,10 @@
+import type { Metadata } from "next";
 import { Building, Globe2, Users, ShieldCheck } from "lucide-react";
 
-export const metadata = {
-  title: "About Us | Arrehlah Travel",
-  description: "Learn more about Arrehlah Travel & Tours Ltd, your trusted travel partner in Kano."
+export const metadata: Metadata = {
+  title: "About Us",
+  description: "Learn about Arrehlah Travel & Tours Ltd, Kano's trusted travel agency. We provide premium flights, tours, Umrah, Hajj, and visa services with exceptional care.",
+  alternates: { canonical: "/about" }
 };
 
 export default function AboutPage() {
@@ -62,3 +64,6 @@ export default function AboutPage() {
     </div>
   );
 }
+
+
+

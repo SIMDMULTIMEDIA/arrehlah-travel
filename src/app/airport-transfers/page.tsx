@@ -1,9 +1,6 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Car, Shield, Clock } from "lucide-react";
-
-export const metadata = {
-  title: "Airport Transfers | Arrehlah Travel"
-};
 
 export default function TransfersPage() {
   return (
@@ -56,3 +53,5 @@ export default function TransfersPage() {
     </div>
   );
 }
+
+

@@ -1,7 +1,4 @@
-export const metadata = {
-  title: "Refund Policy | Arrehlah Travel"
-};
-
+import type { Metadata } from "next";
 export default function RefundPage() {
   return (
     <div className="min-h-screen bg-slate-50 py-12 lg:py-20">
@@ -33,3 +30,6 @@ export default function RefundPage() {
     </div>
   );
 }
+
+
+

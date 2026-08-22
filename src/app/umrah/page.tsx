@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Umrah Packages from Nigeria",
+  description: "Book your Umrah package from Kano, Nigeria with Arrehlah Travel & Tours. We handle visas, flights, hotels, and transport for a seamless spiritual journey.",
+  alternates: { canonical: "/umrah" }
+};
 
 export default function UmrahPage() {
   const packages = [
@@ -88,3 +95,5 @@ export default function UmrahPage() {
     </div>
   );
 }
+
+

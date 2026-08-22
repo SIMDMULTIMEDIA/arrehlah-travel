@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Map, Calendar, Users, Search, Star } from "lucide-react";
@@ -156,3 +157,5 @@ export default async function HotelsPage() {
     </div>
   );
 }
+
+

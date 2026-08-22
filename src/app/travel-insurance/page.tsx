@@ -1,9 +1,6 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { ShieldAlert, HeartPulse, Luggage, PlaneTakeoff, Clock } from "lucide-react";
-
-export const metadata = {
-  title: "Travel Insurance | Arrehlah Travel"
-};
 
 export default function InsurancePage() {
   return (
@@ -61,3 +58,5 @@ export default function InsurancePage() {
     </div>
   );
 }
+
+

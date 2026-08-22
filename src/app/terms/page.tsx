@@ -1,5 +1,8 @@
-export const metadata = {
-  title: "Terms of Service | Arrehlah Travel"
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description: "Terms of service for Arrehlah Travel & Tours Ltd.",
+  alternates: { canonical: "/terms" }
 };
 
 export default function TermsPage() {
@@ -34,3 +37,6 @@ export default function TermsPage() {
     </div>
   );
 }
+
+
+

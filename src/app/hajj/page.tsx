@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Hajj Packages from Nigeria",
+  description: "Secure your spot for Hajj with Arrehlah Travel & Tours. We offer complete Hajj packages from Kano, Nigeria including flights, premium accommodation, and guidance.",
+  alternates: { canonical: "/hajj" }
+};
 
 export default function HajjPage() {
   return (
@@ -36,3 +43,5 @@ export default function HajjPage() {
     </div>
   );
 }
+
+

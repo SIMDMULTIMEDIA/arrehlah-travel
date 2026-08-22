@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, MapPin, Clock, Calendar } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Tours & Travel Packages",
+  description: "Discover our exclusive tours and travel packages from Kano, Nigeria. Arrehlah Travel & Tours offers luxury experiences worldwide.",
+  alternates: { canonical: "/tours" }
+};
 
 export default function ToursPage() {
   const tours = [
@@ -57,3 +64,5 @@ export default function ToursPage() {
     </div>
   );
 }
+
+

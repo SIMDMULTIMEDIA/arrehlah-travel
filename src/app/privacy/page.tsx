@@ -1,5 +1,8 @@
-export const metadata = {
-  title: "Privacy Policy | Arrehlah Travel"
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "Privacy policy of Arrehlah Travel & Tours Ltd.",
+  alternates: { canonical: "/privacy" }
 };
 
 export default function PrivacyPage() {
@@ -42,3 +45,6 @@ export default function PrivacyPage() {
     </div>
   );
 }
+
+
+

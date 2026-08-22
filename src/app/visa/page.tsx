@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Globe, FileText, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Visa Services in Kano, Nigeria",
+  description: "Expert visa assistance in Kano for Dubai, Saudi Arabia, UK, USA, and Schengen countries. Fast processing and reliable support by Arrehlah Travel & Tours.",
+  alternates: { canonical: "/visa" }
+};
 
 export default function VisaPage() {
   const popularVisas = [
@@ -56,3 +63,5 @@ export default function VisaPage() {
     </div>
   );
 }
+
+

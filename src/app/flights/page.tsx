@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PlaneTakeoff, Search, Map, Calendar, Users, Info } from "lucide-react";
@@ -190,3 +191,5 @@ export default async function FlightsPage({
     </div>
   );
 }
+
+
