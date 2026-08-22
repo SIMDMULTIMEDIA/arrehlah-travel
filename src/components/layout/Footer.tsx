@@ -81,15 +81,15 @@ export async function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-[var(--color-brand-green)] shrink-0 mt-0.5" />
-                <span className="text-slate-300 text-sm">123 Travel Avenue, Central Business District, Kano, Nigeria</span>
+                <span className="text-slate-300 text-sm">NO 37 Dantata Plaza Sharada Phase 1, by Kwanar Freedom Radio, Kano, Nigeria 700234</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-[var(--color-brand-green)] shrink-0" />
-                <span className="text-slate-300 text-sm">+234 800 ARREHLAH</span>
+                <a href="tel:+2349079797429" className="text-slate-300 hover:text-white text-sm transition-colors">0907 979 7429</a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-[var(--color-brand-green)] shrink-0" />
-                <span className="text-slate-300 text-sm">info@arrehlah.com</span>
+                <a href="mailto:arrehlahtravelandtours@gmail.com" className="text-slate-300 hover:text-white text-sm transition-colors">arrehlahtravelandtours@gmail.com</a>
               </li>
             </ul>
           </div>

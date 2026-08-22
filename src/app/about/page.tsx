@@ -49,7 +49,7 @@ export default function AboutPage() {
              <div className="flex flex-col gap-2">
                 <Building className="h-8 w-8 text-[var(--color-brand-green)]" />
                 <h4 className="font-bold text-slate-900">Local Presence</h4>
-                <p className="text-sm text-slate-600">Easily reach us at our physical office in Kano for face-to-face consultations.</p>
+                <p className="text-sm text-slate-600">Visit us at NO 37 Dantata Plaza, Sharada Phase 1, Kano. Call 0907 979 7429.</p>
              </div>
              <div className="flex flex-col gap-2">
                 <Globe2 className="h-8 w-8 text-[var(--color-brand-green)]" />
