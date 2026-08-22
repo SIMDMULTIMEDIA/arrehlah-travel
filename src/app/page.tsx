@@ -30,12 +30,16 @@ export default function Home() {
               Flights, hotels, tours, Umrah, Hajj, visas and complete travel solutions from Kano to the world.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <Button size="lg" className="text-base font-semibold px-8 py-6 h-auto">
-                Start Your Journey
-              </Button>
-              <Button size="lg" variant="outline" className="text-base font-semibold px-8 py-6 h-auto bg-white/10 text-white border-white/30 hover:bg-white hover:text-[var(--color-brand-navy)]">
-                Explore Packages
-              </Button>
+              <Link href="/flights">
+                <Button size="lg" className="text-base font-semibold px-8 py-6 h-auto w-full sm:w-auto">
+                  Start Your Journey
+                </Button>
+              </Link>
+              <Link href="/tours">
+                <Button size="lg" variant="outline" className="text-base font-semibold px-8 py-6 h-auto w-full sm:w-auto bg-white/10 text-white border-white/30 hover:bg-white hover:text-[var(--color-brand-navy)]">
+                  Explore Packages
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -48,14 +52,15 @@ export default function Home() {
             {/* Tabs */}
             <div className="flex overflow-x-auto hide-scrollbar gap-2 mb-6 pb-2">
               {[
-                { name: "Flights", icon: PlaneTakeoff },
-                { name: "Hotels", icon: Hotel },
-                { name: "Tours", icon: Map },
-                { name: "Umrah", icon: Star },
-                { name: "Visa", icon: Calendar },
+                { name: "Flights", icon: PlaneTakeoff, href: "/flights" },
+                { name: "Hotels", icon: Hotel, href: "/hotels" },
+                { name: "Tours", icon: Map, href: "/tours" },
+                { name: "Umrah", icon: Star, href: "/umrah" },
+                { name: "Visa", icon: Calendar, href: "/visa" },
               ].map((tab, idx) => (
-                <button
+                <Link
                   key={tab.name}
+                  href={tab.href}
                   className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                     idx === 0 
                       ? "bg-[var(--color-brand-navy)] text-white" 
@@ -64,7 +69,7 @@ export default function Home() {
                 >
                   <tab.icon className="h-4 w-4" />
                   {tab.name}
-                </button>
+                </Link>
               ))}
             </div>
 
@@ -92,10 +97,12 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <Button className="w-full h-10 gap-2">
-                  <Search className="h-4 w-4" />
-                  Search Flights
-                </Button>
+                <Link href="/flights">
+                  <Button className="w-full h-10 gap-2">
+                    <Search className="h-4 w-4" />
+                    Search Flights
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -117,7 +124,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {['Dubai, UAE', 'London, UK', 'Jeddah, KSA', 'Cairo, Egypt'].map((dest, i) => (
-              <div key={i} className="group relative rounded-2xl overflow-hidden cursor-pointer h-72 shadow-sm hover:shadow-xl transition-all duration-300">
+              <Link key={i} href="/tours" className="group relative rounded-2xl overflow-hidden cursor-pointer h-72 shadow-sm hover:shadow-xl transition-all duration-300 block">
                 <div className="absolute inset-0 bg-slate-900">
                   <img 
                     src={`https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=600&auto=format&fit=crop&sig=${i}`}
@@ -130,7 +137,7 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-white mb-1">{dest}</h3>
                   <p className="text-sm text-slate-300">Explore tours & flights</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -181,9 +188,11 @@ export default function Home() {
                   </li>
                 </ul>
 
-                <Button className="w-full h-12" variant={pkg.popular ? 'default' : 'outline'}>
-                  View Details
-                </Button>
+                <Link href="/umrah">
+                  <Button className="w-full h-12" variant={pkg.popular ? 'default' : 'outline'}>
+                    View Details
+                  </Button>
+                </Link>
               </div>
             ))}
           </div>
@@ -198,12 +207,16 @@ export default function Home() {
             Chat with our travel experts on WhatsApp or give us a call. We're here to make your travel dreams a reality.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="px-8 py-6 text-base font-bold">
-              Chat on WhatsApp
-            </Button>
-            <Button size="lg" variant="outline" className="px-8 py-6 text-base font-bold bg-transparent text-white border-white hover:bg-white/10 hover:text-white">
-              Contact Us
-            </Button>
+            <Link href="https://wa.me/2347012345678" target="_blank">
+              <Button size="lg" variant="secondary" className="px-8 py-6 text-base font-bold w-full sm:w-auto">
+                Chat on WhatsApp
+              </Button>
+            </Link>
+            <Link href="/support">
+              <Button size="lg" variant="outline" className="px-8 py-6 text-base font-bold bg-transparent text-white border-white hover:bg-white/10 hover:text-white w-full sm:w-auto">
+                Contact Us
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
