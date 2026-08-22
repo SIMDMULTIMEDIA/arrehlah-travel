@@ -95,10 +95,28 @@ export async function Footer() {
           </div>
         </div>
 
+        <div className="border-t border-slate-800 pt-8 pb-4 mb-4 flex flex-col items-center justify-center gap-6">
+          <div className="text-center">
+            <h4 className="text-slate-400 text-sm font-semibold mb-4 uppercase tracking-wider">Our Flight Partners</h4>
+            <div className="flex flex-wrap justify-center gap-6 items-center opacity-70 hover:opacity-100 transition-opacity">
+               {/* Replace src with actual logos later */}
+               <span className="text-slate-300 font-bold text-lg tracking-tight">Emirates</span>
+               <span className="text-slate-300 font-bold text-lg tracking-tight">Qatar Airways</span>
+               <span className="text-slate-300 font-bold text-lg tracking-tight">Ethiopian Airlines</span>
+               <span className="text-slate-300 font-bold text-lg tracking-tight">EgyptAir</span>
+               <span className="text-slate-300 font-bold text-lg tracking-tight">Turkish Airlines</span>
+            </div>
+          </div>
+        </div>
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-400 text-sm text-center md:text-left">
-            &copy; {new Date().getFullYear()} Arrehlah Travel & Tours Ltd. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center md:items-start">
+            <p className="text-slate-400 text-sm text-center md:text-left mb-1">
+              &copy; {new Date().getFullYear()} Arrehlah Travel & Tours Ltd. All rights reserved.
+            </p>
+            <p className="text-slate-500 text-xs text-center md:text-left">
+              Developed by <a href="mailto:simdmultimedia@gmail.com" title="Phone: 08064676778 | Email: simdmultimedia@gmail.com" className="text-[var(--color-brand-gold)] hover:text-white transition-colors underline">SIMDMULTIMEDIA</a>
+            </p>
+          </div>
           <div className="flex gap-6">
             <Link href="/terms" className="text-slate-400 hover:text-white text-sm transition-colors">Terms of Service</Link>
             <Link href="/privacy" className="text-slate-400 hover:text-white text-sm transition-colors">Privacy Policy</Link>
@@ -109,3 +127,4 @@ export async function Footer() {
     </footer>
   );
 }
+
