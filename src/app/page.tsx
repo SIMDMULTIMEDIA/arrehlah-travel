@@ -3,23 +3,15 @@ import { Input } from "@/components/ui/input";
 import { PlaneTakeoff, Hotel, Map, Calendar, Search, ArrowRight, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import HeroSlider from "@/components/HeroSlider";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center justify-center">
-        {/* Background Image / Overlay */}
-        <div 
-          className="absolute inset-0 z-0 bg-slate-900"
-          style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-brand-navy)]/90 to-[var(--color-brand-navy)]/40 mix-blend-multiply" />
-        </div>
+        {/* Background Image Slider */}
+        <HeroSlider />
 
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 pt-20 text-center md:text-left">
           <div className="max-w-3xl">
