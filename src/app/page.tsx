@@ -109,7 +109,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-[var(--color-brand-navy)] mb-2">Popular Destinations</h2>
               <p className="text-slate-600">Explore our most requested locations for your next trip.</p>
             </div>
-            <Link href="/destinations" className="hidden sm:flex items-center text-[var(--color-brand-green)] font-medium hover:underline">
+            <Link href="/tours" className="hidden sm:flex items-center text-[var(--color-brand-green)] font-medium hover:underline">
               View all <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
           </div>
@@ -204,7 +204,7 @@ export default function Home() {
                 Chat on WhatsApp
               </Button>
             </Link>
-            <Link href="/support">
+            <Link href="/about">
               <Button size="lg" variant="outline" className="px-8 py-6 text-base font-bold bg-transparent text-white border-white hover:bg-white/10 hover:text-white w-full sm:w-auto">
                 Contact Us
               </Button>

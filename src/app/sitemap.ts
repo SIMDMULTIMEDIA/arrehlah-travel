@@ -6,15 +6,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     "",
     "/about",
+    "/flights",
+    "/hotels",
     "/tours",
-    "/destinations",
     "/umrah",
     "/hajj",
     "/visa",
     "/airport-transfers",
     "/travel-insurance",
     "/offers",
-    "/contact",
     "/privacy",
     "/terms",
     "/refund-policy"
