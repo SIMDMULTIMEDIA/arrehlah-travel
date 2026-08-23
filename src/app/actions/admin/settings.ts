@@ -5,31 +5,32 @@ import { requireRole } from "@/lib/admin-auth";
 import { RoleName } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-export async function updateSocialSettings(formData: FormData) {
+export async function updateSettings(formData: FormData) {
   try {
     await requireRole([RoleName.SUPER_ADMIN]);
 
-    const facebook = formData.get("social_facebook") as string;
-    const twitter = formData.get("social_twitter") as string;
-    const instagram = formData.get("social_instagram") as string;
-
-    const updates = [
-      { key: "social_facebook", value: facebook },
-      { key: "social_twitter", value: twitter },
-      { key: "social_instagram", value: instagram },
+    const keys = [
+      "social_facebook", 
+      "social_twitter", 
+      "social_instagram",
+      "contact_phone",
+      "contact_email",
+      "contact_address",
+      "contact_whatsapp"
     ];
 
-    for (const item of updates) {
-      if (item.value !== null) {
+    for (const key of keys) {
+      const value = formData.get(key) as string;
+      if (value !== null) {
         await prisma.systemSetting.upsert({
-          where: { key: item.key },
-          update: { value: item.value },
-          create: { key: item.key, value: item.value, description: "Social Media Link" },
+          where: { key: key },
+          update: { value: value },
+          create: { key: key, value: value, description: "System Setting" },
         });
       }
     }
 
-    revalidatePath("/"); // revalidate layout/footer
+    revalidatePath("/", "layout"); 
     revalidatePath("/admin/settings");
     return { success: true, message: "Settings updated successfully" };
   } catch (error: any) {

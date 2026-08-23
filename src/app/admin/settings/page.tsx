@@ -11,7 +11,15 @@ export default async function SettingsPage() {
   const dbSettings = await prisma.systemSetting.findMany({
     where: {
       key: {
-        in: ["social_facebook", "social_twitter", "social_instagram"]
+        in: [
+          "social_facebook", 
+          "social_twitter", 
+          "social_instagram",
+          "contact_phone",
+          "contact_email",
+          "contact_address",
+          "contact_whatsapp"
+        ]
       }
     }
   });
@@ -25,7 +33,7 @@ export default async function SettingsPage() {
     <div className="space-y-6 max-w-5xl mx-auto">
       <div>
         <h1 className="text-2xl font-bold text-[var(--color-brand-navy)] flex items-center gap-3">
-          System Settings
+          <Settings className="w-6 h-6" /> System Settings
         </h1>
         <p className="text-sm text-slate-500 mt-1">
           Global application configuration.

@@ -6,24 +6,30 @@ export async function Footer() {
   let facebookLink = "#";
   let twitterLink = "#";
   let instagramLink = "#";
+  let contactPhone = "0907 979 7429";
+  let contactEmail = "arrehlahtravelandtours@gmail.com";
+  let contactAddress = "NO 37 Dantata Plaza Sharada Phase 1, by Kwanar Freedom Radio, Kano, Nigeria 700234";
 
   try {
     const settings = await prisma.systemSetting.findMany({
       where: {
         key: {
-          in: ["social_facebook", "social_twitter", "social_instagram"]
+          in: ["social_facebook", "social_twitter", "social_instagram", "contact_phone", "contact_email", "contact_address"]
         }
       }
     });
 
     settings.forEach(setting => {
-      if (setting.key === "social_facebook") facebookLink = setting.value;
-      if (setting.key === "social_twitter") twitterLink = setting.value;
-      if (setting.key === "social_instagram") instagramLink = setting.value;
+      if (setting.key === "social_facebook" && setting.value) facebookLink = setting.value;
+      if (setting.key === "social_twitter" && setting.value) twitterLink = setting.value;
+      if (setting.key === "social_instagram" && setting.value) instagramLink = setting.value;
+      if (setting.key === "contact_phone" && setting.value) contactPhone = setting.value;
+      if (setting.key === "contact_email" && setting.value) contactEmail = setting.value;
+      if (setting.key === "contact_address" && setting.value) contactAddress = setting.value;
     });
   } catch (e) {
     // Graceful fallback during build or DB downtime
-    console.error("Failed to load social links:", e);
+    console.error("Failed to load settings:", e);
   }
 
   return (
@@ -81,15 +87,15 @@ export async function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-[var(--color-brand-green)] shrink-0 mt-0.5" />
-                <span className="text-slate-300 text-sm">NO 37 Dantata Plaza Sharada Phase 1, by Kwanar Freedom Radio, Kano, Nigeria 700234</span>
+                <span className="text-slate-300 text-sm">{contactAddress}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-[var(--color-brand-green)] shrink-0" />
-                <a href="tel:+2349079797429" className="text-slate-300 hover:text-white text-sm transition-colors">0907 979 7429</a>
+                <a href={`tel:${contactPhone.replace(/ /g, '')}`} className="text-slate-300 hover:text-white text-sm transition-colors">{contactPhone}</a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-[var(--color-brand-green)] shrink-0" />
-                <a href="mailto:arrehlahtravelandtours@gmail.com" className="text-slate-300 hover:text-white text-sm transition-colors">arrehlahtravelandtours@gmail.com</a>
+                <a href={`mailto:${contactEmail}`} className="text-slate-300 hover:text-white text-sm transition-colors">{contactEmail}</a>
               </li>
             </ul>
           </div>
@@ -99,7 +105,6 @@ export async function Footer() {
           <div className="text-center">
             <h4 className="text-slate-400 text-sm font-semibold mb-4 uppercase tracking-wider">Our Flight Partners</h4>
             <div className="flex flex-wrap justify-center gap-6 items-center opacity-70 hover:opacity-100 transition-opacity">
-               {/* Replace src with actual logos later */}
                <span className="text-slate-300 font-bold text-lg tracking-tight">Emirates</span>
                <span className="text-slate-300 font-bold text-lg tracking-tight">Qatar Airways</span>
                <span className="text-slate-300 font-bold text-lg tracking-tight">Ethiopian Airlines</span>
@@ -127,4 +132,3 @@ export async function Footer() {
     </footer>
   );
 }
-
