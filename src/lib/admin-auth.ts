@@ -7,26 +7,21 @@ import { RoleName } from "@prisma/client";
 /**
  * Creates a server-side Supabase client using cookies.
  */
-function createClient() {
-  const cookieStore = cookies();
+export async function createClient() {
+  const cookieStore = await cookies();
   
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        async getAll() {
-          const resolvedCookies = await cookieStore;
-          return resolvedCookies.getAll().map((cookie) => ({
-            name: cookie.name,
-            value: cookie.value,
-          }));
+        getAll() {
+          return cookieStore.getAll();
         },
-        async setAll(cookiesToSet) {
+        setAll(cookiesToSet) {
           try {
-            const resolvedCookies = await cookieStore;
             cookiesToSet.forEach(({ name, value, options }) =>
-              resolvedCookies.set(name, value, options)
+              cookieStore.set(name, value, options)
             );
           } catch (error) {
             // The `setAll` method was called from a Server Component.
@@ -49,13 +44,11 @@ async function getDevBypassUser() {
     process.env.ADMIN_DEV_BYPASS === "true"
   ) {
     try {
-      // Attempt to find a SUPER_ADMIN in the database
       let admin = await prisma.user.findFirst({
         where: { role: RoleName.SUPER_ADMIN },
       });
 
       if (!admin) {
-        // If no admin exists, create a dummy one for dev purposes
         admin = await prisma.user.create({
           data: {
             email: "devadmin@arrehlah.com",
@@ -68,7 +61,6 @@ async function getDevBypassUser() {
       return admin;
     } catch (error) {
       console.error("Database connection failed in DEV bypass, using mock user.");
-      // Return a complete mock user so UI can still render
       return {
         id: "mock-dev-id",
         email: "devadmin@arrehlah.com",
@@ -97,7 +89,7 @@ export async function getAuthenticatedUser() {
     }
 
     // 2. Real Authentication Flow
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data: { user: supabaseUser }, error } = await supabase.auth.getUser();
 
     if (error || !supabaseUser) {
@@ -110,7 +102,6 @@ export async function getAuthenticatedUser() {
     });
 
     if (!dbUser && supabaseUser.email) {
-      // Fallback to email lookup if ID doesn't match
       return await prisma.user.findUnique({
         where: { email: supabaseUser.email }
       });
@@ -145,7 +136,6 @@ export async function requireAdmin() {
   const user = await requireAuthenticatedUser();
   
   if (user.role === RoleName.CUSTOMER) {
-    // Record unauthorized attempt (fire and forget)
     try {
       await prisma.auditLog.create({
         data: {
@@ -158,7 +148,7 @@ export async function requireAdmin() {
     } catch (e) {
       // Ignore audit log failure during unauthorized access
     }
-    redirect("/"); // Or to a specific "Unauthorized" page
+    redirect("/");
   }
   
   return user;
@@ -170,13 +160,12 @@ export async function requireAdmin() {
 export async function requireRole(allowedRoles: RoleName[]) {
   const user = await requireAdmin();
   
-  // SUPER_ADMIN has access to everything
   if (user.role === RoleName.SUPER_ADMIN) {
     return user;
   }
 
   if (!allowedRoles.includes(user.role)) {
-    redirect("/admin"); // Redirect back to admin dashboard if they lack specific role
+    redirect("/admin");
   }
 
   return user;
