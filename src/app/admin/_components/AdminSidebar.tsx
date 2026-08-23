@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { logout } from "@/app/auth/actions";
 import { 
   LayoutDashboard, Users, Ticket, Map, Plane, FileText, Settings, 
   LogOut, CreditCard, Hotel, MapPin, Briefcase, Tag, MessageSquare, 
@@ -158,10 +159,12 @@ export default function AdminSidebar({ user }: { user: any }) {
               <p className="text-xs text-slate-400 truncate">{user.role}</p>
             </div>
           </div>
-          <button className="flex w-full items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-400 hover:bg-slate-800 hover:text-red-300 transition-colors">
-            <LogOut className="h-5 w-5" />
-            Sign Out
-          </button>
+          <form action={logout} className="w-full">
+            <button type="submit" className="flex w-full items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-400 hover:bg-slate-800 hover:text-red-300 transition-colors">
+              <LogOut className="h-5 w-5" />
+              Sign Out
+            </button>
+          </form>
         </div>
       </aside>
 
