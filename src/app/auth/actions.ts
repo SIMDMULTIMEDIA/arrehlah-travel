@@ -32,7 +32,7 @@ function createClient() {
   );
 }
 
-export async function login(formData: FormData) {
+export async function login(prevState: any, formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const supabase = createClient();

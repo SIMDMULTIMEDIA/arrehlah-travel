@@ -6,9 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function LoginForm() {
-  const [state, formAction, pending] = useActionState(async (prevState: any, formData: FormData) => {
-    return await login(formData);
-  }, null);
+  const [state, formAction, pending] = useActionState(login, null);
 
   return (
     <form className="space-y-6" action={formAction}>
