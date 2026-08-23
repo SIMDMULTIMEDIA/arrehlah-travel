@@ -8,6 +8,8 @@ import { requireAdmin } from "@/lib/admin-auth";
 import AdminSidebar from "./_components/AdminSidebar";
 import AdminHeader from "./_components/AdminHeader";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminLayout({
   children,
 }: {

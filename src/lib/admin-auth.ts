@@ -89,33 +89,41 @@ async function getDevBypassUser() {
  * Gets the currently authenticated user from the database.
  */
 export async function getAuthenticatedUser() {
-  // 1. Check Dev Bypass First (Only in Dev)
-  const devUser = await getDevBypassUser();
-  if (devUser) {
-    return devUser;
-  }
+  try {
+    // 1. Check Dev Bypass First (Only in Dev)
+    const devUser = await getDevBypassUser();
+    if (devUser) {
+      return devUser;
+    }
 
-  // 2. Real Authentication Flow
-  const supabase = createClient();
-  const { data: { user: supabaseUser }, error } = await supabase.auth.getUser();
+    // 2. Real Authentication Flow
+    const supabase = createClient();
+    const { data: { user: supabaseUser }, error } = await supabase.auth.getUser();
 
-  if (error || !supabaseUser) {
+    if (error || !supabaseUser) {
+      return null;
+    }
+
+    // 3. Match Supabase user to Prisma user
+    const dbUser = await prisma.user.findUnique({
+      where: { id: supabaseUser.id },
+    });
+
+    if (!dbUser && supabaseUser.email) {
+      // Fallback to email lookup if ID doesn't match
+      return await prisma.user.findUnique({
+        where: { email: supabaseUser.email }
+      });
+    }
+
+    return dbUser;
+  } catch (error: any) {
+    if (error?.digest?.startsWith("NEXT_REDIRECT") || error?.digest === "DYNAMIC_SERVER_USAGE") {
+      throw error;
+    }
+    console.error("Authentication error in getAuthenticatedUser:", error);
     return null;
   }
-
-  // 3. Match Supabase user to Prisma user
-  const dbUser = await prisma.user.findUnique({
-    where: { id: supabaseUser.id },
-  });
-
-  if (!dbUser && supabaseUser.email) {
-      // Fallback to email lookup if ID doesn't match (e.g. legacy migrations)
-      return await prisma.user.findUnique({
-          where: { email: supabaseUser.email }
-      });
-  }
-
-  return dbUser;
 }
 
 /**
@@ -139,16 +147,16 @@ export async function requireAdmin() {
   if (user.role === RoleName.CUSTOMER) {
     // Record unauthorized attempt (fire and forget)
     try {
-        await prisma.auditLog.create({
-            data: {
-                userId: user.id,
-                action: "UNAUTHORIZED_ADMIN_ACCESS",
-                resource: "AdminPanel",
-                metadata: { path: "/admin" }
-            }
-        });
+      await prisma.auditLog.create({
+        data: {
+          userId: user.id,
+          action: "UNAUTHORIZED_ADMIN_ACCESS",
+          resource: "AdminPanel",
+          metadata: { path: "/admin" }
+        }
+      });
     } catch (e) {
-        // Ignore audit log failure during unauthorized access
+      // Ignore audit log failure during unauthorized access
     }
     redirect("/"); // Or to a specific "Unauthorized" page
   }
